@@ -8,7 +8,7 @@ function FeatureSession() {
 const navigate = useNavigate();
 
   return (
-    <div className='w-full flex flex-col items-center px-36 pt-20'>
+    <div className='w-full flex flex-col items-center  px-36 pt-20'>
       {/* upper-part */}
       <div className='w-full flex justify-between items-center'>
         <p className='text-gray-300 font-medium text-2xl'>

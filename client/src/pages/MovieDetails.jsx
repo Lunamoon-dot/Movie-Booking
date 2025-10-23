@@ -5,6 +5,7 @@ import FrontDetail from '../components/MovieDetail/FrontDetail';
 import Cast from '../components/MovieDetail/Cast';
 import DateSelect from '../components/MovieDetail/DateSelect';
 import Loading from '../components/Loading';
+import MoviesRecommendation from '../MoviesRecommendation';
 
 function MovieDetails() {
   const {id} = useParams();
@@ -36,10 +37,11 @@ function MovieDetails() {
   }, [id])
 
   return show ? (
-    <div className='flex flex-col px-36 mt-20'>
+    <div className='flex flex-col px-36 mt-30'>
      <FrontDetail show={show.movie}/>
      <Cast show={show.movie}/>
      <DateSelect id={id} dateTime={show.dateTime}/>
+ 
     </div>
   ) : (
     <Loading/>

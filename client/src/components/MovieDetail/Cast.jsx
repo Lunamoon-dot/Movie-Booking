@@ -5,11 +5,11 @@ export default function Cast({show}) {
   const [limit, setLimit]= useState(6);
   const [arrow, setArrow] = useState(true);
   return (
-    <div>
+    <div className='mt-8'>
       <p>
         Movie Cast
       </p>
-      <div className='flex flex-wrap items-center justify-start gap-3 relative'>
+      <div className='flex flex-wrap items-center justify-start gap-3 relative mt-4'>
         {show.casts.slice(0, limit).map((cast,index)=>(
           <div key={index} className='flex'>
             <div className='flex flex-col items-center'>
