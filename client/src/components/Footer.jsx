@@ -14,10 +14,11 @@ function Footer() {
                   <div>
                       <h2 className="font-semibold mb-5">Company</h2>
                       <ul className="text-sm space-y-2">
-                          <li><a href="#">Home</a></li>
-                          <li><a href="#">About us</a></li>
-                          <li><a href="#">Contact us</a></li>
-                          <li><a href="#">Privacy policy</a></li>
+                         
+                        <li><a href="#">About us</a></li>
+                        <li><a href="#">References</a></li>
+                        <li><a href="#">Contact us</a></li>
+                        <li><a href="#">Privacy policy</a></li>
                       </ul>
                   </div>
                   <div>
@@ -30,7 +31,7 @@ function Footer() {
               </div>
           </div>
           <p className="pt-4 text-center text-sm pb-5">
-              Copyright {new Date().getFullYear()} © <a href="https://prebuiltui.com">PrebuiltUI</a>. All Right Reserved.
+              Copyright {new Date().getFullYear()} © <a href="https://prebuiltui.com">Nhom7</a>. All Right Reserved.
           </p>
       </footer>
   )

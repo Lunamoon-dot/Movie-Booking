@@ -10,14 +10,15 @@ export default function DateSelect({dateTime, id}) {
   if(!selected){
     return toast.error('Please select a date')
   }
+  // hinh nhu la sit-layout
   navigate(`/movies/${id}/${selected}`)
   window.scrollTo(0, 0)
  }
 
   return (
-    <div id='DateSelect' className='flex flex-col gap-8 px-8 py-8 rounded-xl backdrop-blur bg-primary/10 overflow-hidden transition-[width] duration-300 mt-8'>
+    <div id='DateSelect' className='flex flex-col gap-8 px-8 py-8 rounded-xl overflow-hidden transition-[width] duration-300 mt-8 mb-8 backdrop-blur-md bg-primary/20'>
       {/* Header */}
-        <p className="ml-10 text-xl font-semibold text-white">Choose Date</p>
+      <p className="ml-10 text-xl font-semibold text-white">Choose Date</p>
 
       {/* Date Selection */}
       <div className='flex flex-col sm:flex-row sm:justify-between sm:items-center gap-6'>

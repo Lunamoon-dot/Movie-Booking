@@ -5,8 +5,8 @@ export default function Cast({show}) {
   const [limit, setLimit]= useState(6);
   const [arrow, setArrow] = useState(true);
   return (
-    <div className='mt-8'>
-      <p>
+    <div className='mt-8 mb-8'>
+      <p className='font-semibold text-2xl '>
         Movie Cast
       </p>
       <div className='flex flex-wrap items-center justify-start gap-3 relative mt-4'>

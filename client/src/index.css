@@ -4,7 +4,17 @@
 @theme {
   --color-primary: #a94fd3;
   /* --color-primary: #f84565; */
-  --color-primary-dull: #D63854;
+  --color-primary-dull: #6b0e6b;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* cho IE và Edge */
+  scrollbar-width: none;     /* cho Firefox */
 }
 
 
@@ -17,4 +27,14 @@
 body{
   color: white;
   background-color: #09090B;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0; /* Thêm dòng này để khắc phục lỗi căn lề margin trong một số trình duyệt */
+}
+
+::-webkit-calendar-picker-indicator{
+    filter:invert(1);
 }
