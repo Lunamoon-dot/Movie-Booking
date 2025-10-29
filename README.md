@@ -1,8 +1,5 @@
 # Movie Ticket Booking Management Website - OwlCinema
 
-![./assets/logo.png](https://github.com/Lunamoon-dot/Movie-Booking/blob/9d3e9f0205049af07331db83070becbbffd50222/z7167659431985_b0c1fdfbb03b68af566b59dfd414fa18.jpg)
-![./assets/logo.png](https://github.com/Lunamoon-dot/Movie-Booking/blob/c6358ac6f16744d050398aad7eacdf721aa1c0c6/z7169222068767_e2f3cf9383a2ab2114495a6a40abc3dc.jpg)
-
 ## Mục lục
 1. [Giới thiệu](#giới-thiệu)
 2. [Tính năng](#tính-năng)
@@ -11,6 +8,8 @@
 5. [Nhóm phát triển](#nhóm-phát-triển)
 ## Giới thiệu
  -Web App làm nhiệm vụ đặt vé xem phim cũng như quản lý vé xem phim.
+
+ ![./assets/logo.png](https://github.com/Lunamoon-dot/Movie-Booking/blob/9d3e9f0205049af07331db83070becbbffd50222/z7167659431985_b0c1fdfbb03b68af566b59dfd414fa18.jpg)
  ## Tính năng
  ### Tổng quan
  - **Giao diện** thân thiện trực quan, dễ điều hướng.
