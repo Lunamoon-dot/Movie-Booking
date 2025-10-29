@@ -1,4 +1,6 @@
 # Movie Ticket Booking Management Website - OwlCinema
+
+![./assets/logo.png](https://github.com/Lunamoon-dot/Movie-Booking/blob/9d3e9f0205049af07331db83070becbbffd50222/z7167659431985_b0c1fdfbb03b68af566b59dfd414fa18.jpg)
 ## Mục lục
 1. [Giới thiệu](#giới-thiệu)
 2. [Tính năng](#tính-năng)
