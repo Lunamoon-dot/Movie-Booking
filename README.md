@@ -74,6 +74,7 @@ Back-end sẽ chạy ở địa chỉ http://localhost:3000
 
 
 - **Hoàng Bảo Uyên** (MaSV:242630986)
+  
    Reports, Design(core), Front-end, UI/UX.
 
 
