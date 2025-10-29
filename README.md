@@ -9,7 +9,7 @@
 ## Giới thiệu
  -Web App làm nhiệm vụ đặt vé xem phim cũng như quản lý vé xem phim.
 
- ![./assets/logo.png](https://github.com/Lunamoon-dot/Movie-Booking/blob/9d3e9f0205049af07331db83070becbbffd50222/z7167659431985_b0c1fdfbb03b68af566b59dfd414fa18.jpg)
+ ![./assets/logo.png](https://github.com/Lunamoon-dot/Movie-Booking/blob/7ee3d3e01a1eaa4c9af6ee4a838f7b0ee876f051/aaa.jpg)
  ## Tính năng
  ### Tổng quan
  - **Giao diện** thân thiện trực quan, dễ điều hướng.
