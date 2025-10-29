@@ -11,7 +11,7 @@ export default function DateSelect({dateTime, id}) {
     return toast.error('Please select a date')
   }
   // hinh nhu la sit-layout
-  navigate(`/movies/${id}/${selected}`)
+  navigate(`/seat-layout/${id}/${selected}`)
   window.scrollTo(0, 0)
  }
 

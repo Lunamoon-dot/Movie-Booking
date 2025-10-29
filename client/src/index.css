@@ -3,8 +3,9 @@
 
 @theme {
   --color-primary: #a94fd3;
-  /* --color-primary: #f84565; */
-  --color-primary-dull: #6b0e6b;
+  --color-primary-dull: #9810fa;
+  --color-second: #9810fa;
+  --color-second-dull: #C47BFF;
 }
 
 .scrollbar-hide::-webkit-scrollbar {

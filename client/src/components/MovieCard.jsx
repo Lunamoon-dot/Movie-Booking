@@ -7,7 +7,7 @@ function MovieCard({movie}) {
 const navigate = useNavigate();
 
   return (
-    <div className='flex flex-col p-3 bg-gray-700 rounded-2xl hover:-translate-y-1 transition duration-300 ease-in-out cursor-pointer w-60 ' onClick={()=> navigate(`/movie-detail/${movie._id}/1`)}>
+    <div className='flex flex-col ju p-3 bg-gray-700 rounded-2xl hover:-translate-y-1 transition duration-300 ease-in-out cursor-pointer w-60 ' onClick={()=> navigate(`/movie-detail/${movie._id}/1`)}>
       <img src={movie.backdrop_path} alt=""  className='rounded-xl object-cover h-45'/>
       <p className='text-xl font-semibold mt-3'>{movie.title}</p>
       <p className='font-light text-sm w-full flex gap-2 text-gray-300 mt-1'>{new Date(movie.release_date).getFullYear()} •{' '}

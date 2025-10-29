@@ -19,7 +19,7 @@ function AddShows() {
     setNowPlayingMovies(dummyShowsData);
   }
 
-  // CẬP NHẬT: Tách logic kiểm tra trùng lặp và thông báo lỗi ra khỏi setDateTimeSelection
+  // CẬP NHẬT: Tách logic kiểm tra trùng lặp  và thông báo lỗi ra khỏi setDateTimeSelection
   const handleDateTimeAdd = ()=>{
     if(!dateTimeInput) return;
     const [date, time] = dateTimeInput.split("T");
@@ -32,6 +32,7 @@ function AddShows() {
       // Nếu trùng, thông báo lỗi và dừng hàm
       toast.error('Ngày và giờ này đã được thêm.');
       setDateTimeInput(''); // Reset input sau khi kiểm tra
+      setShowPrice('');
       return; 
     }
 
@@ -140,11 +141,10 @@ function AddShows() {
       </div>
     </div>
     
-    {/* Display Selected Time (Đã sửa lỗi Grid và UI) */}
+    {/* Display Selected Time  */}
     {Object.keys(dateTimeSelection).length > 0 &&
     <div className='mt-6'>
       <h2 className='mb-4 text-xl font-semibold'>Selected Showtimes</h2>
-      {/* SỬA: Đảm bảo responsive và hiển thị đúng 3 cột */}
       <ul className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'> 
         {Object.entries(dateTimeSelection).map(([date, times])=>
         (

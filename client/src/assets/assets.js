@@ -3,13 +3,15 @@ import appStore from './appStore.svg'
 import screenImage from './screenImage.svg'
 import profile from './profile.png'
 import logo1 from './logo1.png'
+import screenicon from './screenicon.svg'
 
 export const assets = {
     logo1,
     googlePlay,
     appStore,
     screenImage,
-    profile
+    profile,
+    screenicon
 }
 
 export const dummyTrailers = [

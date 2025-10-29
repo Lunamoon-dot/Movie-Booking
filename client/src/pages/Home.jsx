@@ -5,10 +5,10 @@ import FeatureSession from '../components/FeatureSession'
 function Home() {
   return (
     <div>
-    <HeroSession/>
-    <FeatureSession/>
+      <HeroSession/>
+      <FeatureSession/>
     </div>
   )
 }
-
+ 
 export default Home

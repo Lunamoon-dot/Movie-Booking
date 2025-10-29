@@ -9,7 +9,7 @@ function HeroSession() {
   const navigate = useNavigate();
   return (
   //  not responsive yet 
-    <div className='flex flex-col opacity-75 gap-3 items-start justify-center px-20 bg-cover bg-center w-full h-screen' style={{  backgroundImage: `linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent 50%),
+    <div className='flex flex-col opacity-75 gap-2 items-start justify-center px-20 bg-cover bg-center w-full h-screen' style={{  backgroundImage: `linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent 50%),
       linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.4)), url(${background})` }}>
       {/* logo */}
       <img src={ghiblilogo} alt=""  className='w-80'/>
@@ -31,7 +31,7 @@ function HeroSession() {
       While the Second World War rages, the teenage Mahito, haunted by his mother's tragic death, is relocated from Tokyo to the serene rural home of his new stepmother Natsuko, a woman who bears a striking resemblance to the boy's mother. As he tries to adjust, this strange new world grows even stranger following the appearance of a persistent gray heron, who perplexes and bedevils Mahito, dubbing him the "long-awaited one."
       </div>
        {/* visit movies button */}
-        <button  className='text-center flex px-4 py-3 gap-1  bg-primary rounded-3xl font-semibold'
+        <button  className='text-center flex px-4 py-3 gap-1 hover:bg-primary-dull cursor-pointer transition ease-in-out duration-300 hover:text-gray-400  bg-primary rounded-3xl font-semibold'
         onClick={()=> navigate('/movies')}
         >
           Explore Movies <ArrowRight strokeWidth={3} width={18}/>
