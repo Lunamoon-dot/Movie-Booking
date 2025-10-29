@@ -31,7 +31,7 @@
 
 **Front-end:** React.js, Clerk, Tailwindcss và một số thư viện khác...
 
-**Back-end:** Node.js, Expressjs, MongoDB (database), Inngest và một số thư viện khác...
+**Back-end:** Node.js, Expressjs, MongoDB (database), Inngest, Clerk và một số thư viện khác...
 
 **Giao thức sử dụng:** HTTP Request + Axios
 
@@ -83,4 +83,5 @@ Back-end sẽ chạy ở địa chỉ http://localhost:3000
 
 
 - **Đặng Xuân Duy** (MaSV:242630915)
+  
   Report (core), Front-end, UI/UX, 
