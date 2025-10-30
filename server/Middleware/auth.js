@@ -8,7 +8,9 @@ const clerkClient = createClerkClient({
 
 export const protectUser = async (req, res, next) =>{
   try{
-    const {userId} = req.auth();
+    const authData = req.auth();
+    console.log("protectUser - authData:", authData);
+    const {userId} = authData;
     if(!userId){
       return res.json({success: false, message:"not authenticated"})
     }
