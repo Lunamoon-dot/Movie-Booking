@@ -121,7 +121,7 @@ function AddShows() {
       <p className=' font-medium mb-8'>Now Playing Movies</p>
 
       {/* Danh sách phim */}
-      <div className='overflow-x-auto pb-4 scrollbar-hide py-2'>
+      <div className='movie-list-container movie-list-container::-webkit-scrollbar pb-4 py-2'>
         <div className='group flex gap-4 w-max py-2'>
         {nowPlayingMovies.map((item) =>(
           <div 

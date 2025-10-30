@@ -36,7 +36,7 @@ const handleFavoriteClick = (e) => {
       <p className='font-light text-sm w-full flex gap-2 text-gray-300 mt-1'>{new Date(movie.release_date).getFullYear()} •{' '}
           {movie.genres?.slice(0,2).map((genre) =>genre.name).join(' | ')}{' '}•<TimeFormat movie ={movie}/>
         </p>
-      <div className='flex items-center justify-between mt-6'>
+      <div className='flex items-center justify-between mt-auto pt-4'>
          <button className=' flex text-[1rem] items-center justify-center w-30 px-2 py-2.5 gap-1 rounded-full cursor-pointer font-medium bg-primary hover:bg-primary-dull transition'>
             Buy Ticket 
             {/* aa */}

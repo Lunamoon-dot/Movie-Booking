@@ -73,7 +73,8 @@ function AdminDashboard() {
 
       {/*Active movies Cards*/}
       <p className='font-bold text-2xl mb-8'>Active Movies</p>
-      <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 justify-start gap-3'>
+      <div className='overflow-y-auto scrollbar-hide  h-screen py-3 px-3'>
+<div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 justify-start gap-3'>
         {dashboard.activeShows?.map((show,index)=>(
           <div key={index} className='flex flex-col backdrop-blur rounded-xl pb-5 bg-primary/20 hover:scale-105 cursor-pointer transition duration-300 ease-in-out'>
             <img src={img_base_url + show.movie.poster_path} alt="" className='h-60 obk object-cover  rounded-t-xl  w-full'/>
@@ -95,6 +96,8 @@ function AdminDashboard() {
         ))}
 
       </div>
+      </div>
+      
     </div>
   ):(<Loading/>)
 }

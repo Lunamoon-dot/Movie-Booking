@@ -39,3 +39,20 @@ input::-webkit-inner-spin-button {
 ::-webkit-calendar-picker-indicator{
     filter:invert(1);
 }
+
+.movie-list-container {
+  /* Bắt buộc phải có để các item hiển thị ngang hàng và cho phép cuộn */
+  overflow-x: scroll; 
+  overflow-y: hidden;
+
+  /* Ẩn thanh cuộn trên các trình duyệt dựa trên WebKit (Chrome, Safari, Opera) */
+  -ms-overflow-style: none; /* Dành cho Internet Explorer và Edge cũ */
+  scrollbar-width: none;  /* Dành cho Firefox */
+}
+
+/* Ẩn thanh cuộn cho trình duyệt WebKit (Chrome, Safari) */
+.movie-list-container::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
