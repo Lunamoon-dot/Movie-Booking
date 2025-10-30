@@ -1,5 +1,6 @@
 import Stripe from 'stripe';
 import Booking from '../model/Booking.js';
+import { inngest } from '../inngest/index.js';
 
 const stripeInstance = new Stripe(process.env.STRIPE_SECRET_KEY);
 
@@ -64,6 +65,11 @@ export const stripeWebhooks = async (request, response)=>{
                     isPaid: true,
                     paymentLink: "" // Xóa payment link sau khi đã thanh toán
                  });
+                //send Confirmation Email
+                 await inngest.send({
+                  name:"app/show.booked",
+                  data:{bookingId}
+                 })
                  console.log(`Booking ${bookingId} updated to Paid.`);
             } else if (booking && booking.isPaid) {
                  // Nếu đã trả tiền (do Stripe gửi lại), chỉ cần log và bỏ qua.
