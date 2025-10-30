@@ -26,7 +26,7 @@
   - Users có thể lưu trữ những bộ phim yêu thích vào trang **Favorites**.
   - Users có thể biết thông tin chi tiết của các bộ phim.
   - Users có thể đặt vé xem phim, thanh toán online qua Stripe.
-  - Nếu Users không thanh toán sau 15p thì vé sẽ bị hủy.
+  - Nếu Users không thanh toán sau 10p thì vé sẽ bị hủy.
 
    ## Công nghệ
 
@@ -34,11 +34,12 @@
 
 **Front-end:** React.js, Clerk, Tailwindcss và một số thư viện khác....
 
-**Back-end:** Node.js, Expressjs, MongoDB (database), Inngest, Clerk và một số thư viện khác....
+**Back-end:** Node.js, Expressjs, Clerk, MongoDB (database), Inngest, và một số thư viện khác....
 
 **Giao thức sử dụng:** HTTP Request + Axios.
 
 **Ngôn ngữ**: JavaScript, HTML, CSS.
+**Deploy**: Vercel
 
 
 ## Cách cài đặt
@@ -73,7 +74,7 @@ Back-end sẽ chạy ở địa chỉ http://localhost:3000
 
 - **Vũ Đoàn Gia Huy** (MaSV: 242630945)
 
-   System Design, Back-end(core), Front-end, UI/UX, React Router, Upload, State, Refinements, Reports.
+   Data Flow, API, Back-end Flow Diagram, User Flow, UI/UX, React Router, Upload, State, Refinements, Reports.
 
 
 - **Hoàng Bảo Uyên** (MaSV:242630986)
