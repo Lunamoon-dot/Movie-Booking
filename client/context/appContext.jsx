@@ -57,6 +57,12 @@ export const AppContext = createContext();
       const token = await getToken();
       console.log("fetchFavorites - token:", token ? "exists" : "missing");
       console.log("fetchFavorites - baseURL:", axios.defaults.baseURL);
+      
+      if (!token) {
+        console.log("fetchFavorites - No token available, skipping");
+        return;
+      }
+      
       const {data} = await axios.get('/api/user/favorites',  {headers:
         {Authorization:`Bearer ${token}`}
       })
@@ -91,13 +97,10 @@ export const AppContext = createContext();
 
     try {
       const token = await getToken();
-      console.log("toggleFavorite - token:", token ? "exists" : "missing");
-      console.log("toggleFavorite - baseURL:", axios.defaults.baseURL);
       const {data} = await axios.post('/api/user/update-favorite', 
         {movieId},
         {headers: {Authorization:`Bearer ${token}`}}
       )
-      console.log("toggleFavorite - response:", data);
       
       if(!data.success){
         // Nếu API fail, revert lại state cũ
@@ -107,8 +110,7 @@ export const AppContext = createContext();
     } catch (error) {
       // Nếu có lỗi, revert lại state cũ
       setFavorites(previousFavorites);
-      console.error("toggleFavorite - error:", error);
-      console.error("toggleFavorite - error response:", error.response?.data);
+      console.error(error);
       toast.error('Failed to update favorites');
     }
   }
