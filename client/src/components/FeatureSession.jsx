@@ -1,11 +1,12 @@
 import React from 'react'
 import {ArrowRight} from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
-import { dummyShowsData } from '../assets/assets';
 import MovieCard from './MovieCard';
+import { useAppContext } from '../../context/appContext';
 
 function FeatureSession() {
 const navigate = useNavigate();
+const {shows} = useAppContext();
 
   return (
     <div className='w-full flex flex-col items-center  px-36 pt-20'>
@@ -22,7 +23,7 @@ const navigate = useNavigate();
 
       {/* phim  */}
       <div className='grid grid-cols-4 max-lg:grid-cols-3 max-md:grid-cols-2 max-sm:grid-cols-1 gap-4 mt-8'>
-        {dummyShowsData.slice(0,4).map((movie, index) =><MovieCard key = {index} movie ={movie}/>)}
+        {shows.slice(0,4).map((movie, index) =><MovieCard key = {index} movie ={movie}/>)}
       </div>
 
       <button className='w-40 px-4.5 py-2 rounded-md cursor-pointer font-medium bg-primary hover:bg-primary-dull transition mt-[4.5rem]' onClick={()=>{scrollTo(0,0);navigate('/movies')}}>Show more</button>

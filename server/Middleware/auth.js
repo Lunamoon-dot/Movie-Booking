@@ -6,9 +6,31 @@ const clerkClient = createClerkClient({
   publishableKey: process.env.CLERK_PUBLISHABLE_KEY,
 });
 
+const getAuthData = (req) => {
+  if (!req) return {};
+  if (typeof req.auth === "function") {
+    return req.auth() || {};
+  }
+  return req.auth || {};
+};
+
+export const protectUser = async (req, res, next) =>{
+  try{
+    const { userId } = getAuthData(req);
+    if(!userId){
+      return res.json({success: false, message:"not authenticated"})
+    }
+    next();
+  }
+  catch(error){
+    console.error("Error in protectUser:", error.message);
+    res.json({success:false, message: error.message})
+  }
+}
+
 export const protectAdmin = async (req, res, next) =>{
   try{
-    const {userId} = req.auth();
+    const { userId } = getAuthData(req);
     if(!userId){
       return res.json({success: false, message:"not authenticated"})
     }

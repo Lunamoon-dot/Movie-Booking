@@ -17,17 +17,25 @@ const checkSeatAvailability =async (showId, selectedSeats) =>{
   }
 }
 
+const getAuthData = (req) => {
+  if (!req) return {};
+  if (typeof req.auth === "function") {
+    return req.auth() || {};
+  }
+  return req.auth || {};
+};
+
 export const creatingBooking = async(req, res)=>{
   try{
-    const {userId} = req.auth();
-    const{showId, selectedSeats} = req.body;
+    const { userId } = getAuthData(req);
+    const{showId, selectedSeats, isPaid = false} = req.body;
     const {origin} = req.headers;
     //xem seat co con khong
     const isAvailable = await checkSeatAvailability(showId, selectedSeats);
     if(!isAvailable){
       return res.json({success:false, message: "Selected seat is not available"})
     }
-    const showData = await Show.findbyId(showId).populate('movie');
+    const showData = await Show.findById(showId).populate('movie');
 
     //create new booking
     const booking = await Booking.create({ //luu du lieu vo booking
@@ -35,6 +43,7 @@ export const creatingBooking = async(req, res)=>{
       show:showId,
       amount:showData.showPrice*selectedSeats.length,
       bookedSeats: selectedSeats,
+      isPaid,
     }) 
 
     selectedSeats.map((seat)=>{
@@ -54,7 +63,7 @@ export const creatingBooking = async(req, res)=>{
 export const getOccupiedSeats = async (req, res)=>{
   try{
     const {showId} = req.params;
-    const showData = await Show.findbyId(showId)
+    const showData = await Show.findById(showId)
     const occupiedSeats = Object.keys(showData.occupiedSeats)
     res.json({success: true, occupiedSeats})
   }

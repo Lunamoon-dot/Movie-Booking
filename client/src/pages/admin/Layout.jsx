@@ -1,9 +1,13 @@
 import React from 'react'
 import AdminSidebar from '../../components/admin/AdminSidebar'
 import { Outlet } from 'react-router-dom'
-
+import { useAppContext } from '../../../context/appContext'
+import Loading from '../../components/Loading'
 function Layout() {
-  return (
+  const {isAdmin} = useAppContext();
+
+
+  return isAdmin ? (
     <div className='flex flex-col'>
       <div className='flex min-h-screen'>
         <AdminSidebar/>
@@ -14,7 +18,7 @@ function Layout() {
         </div>
       </div>
     </div>
-  )
+  ):(<Loading/>)
 }
 
 export default Layout

@@ -1,38 +1,56 @@
 import React, { useEffect, useState } from 'react'
-import { dummyBookingData } from '../assets/assets'
 import Loading from '../components/Loading'
 import { Star,Check } from 'lucide-react'
-import { dateFormat } from '../lib/DateFormat'
+import { dateFormat } from '../lib/DateFormat'  
+import { useAppContext } from '../../context/appContext'
+import toast from 'react-hot-toast'
 
 
 function MyBooking() {
+  const {axios, getToken, user,img_base_url} = useAppContext();
+
   const currency = import.meta.env.VITE_CURRENCY;
-  const [booking, setBooking] = useState([]);
+  const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const getMyBookings = async () => {
-    setBooking(dummyBookingData);
-    setLoading(false);
+      try {
+        const token = await getToken();
+        const {data} = await axios.get('/api/user/bookings', {headers:{
+          Authorization: `Bearer ${token}`
+        }})
+        if(data.success){
+          setBookings(data.booking || [])
+        }
+         setLoading(false)
+      } catch (error) {
+        console.error('Error fetching bookings:', error);
+        toast.error(error.message || 'Failed to fetch bookings');
+      } 
   }
 
-  useEffect(() => getMyBookings(), [])
+  useEffect(() =>{
+    if(user){ 
+      getMyBookings()
+    }
+  }, [user])
 
   return !loading ? (
-    <div className='flex flex-col items-center gap-8 mt-30'>
+    <div className='flex flex-col items-center gap-8 mt-30 h-screen'>
         <p className='text-3xl font-semibold'>My Booking</p>
-      {booking.length === 0 ? (
+      {bookings.length === 0 ? (
         <div className='text-center text-gray-400 mt-12'>
           <p className='text-xl mb-2'>No bookings found</p>
           <p className='text-sm'>Your movie bookings will appear here</p>
         </div>
       ) : (
-        booking.map((booking, index) => (
+        bookings.map((booking, index) => (
           <div key={index} className='w-full  max-w-4xl bg-primary/10 border border-primary/20 rounded-lg p-6 backdrop-blur-sm'>
             <div className='flex flex-col md:flex-row gap-6'>
               {/* Movie Poster */}
               <div className='shrink-0'>
                 <img
-                  src={booking.show.movie.poster_path}
+                  src={img_base_url + booking.show.movie.poster_path}
                   alt={booking.show.movie.title}
                   className='w-60 h-auto aspect-video object-cover object-bottom rounded-lg'
                 />   
@@ -60,10 +78,10 @@ function MyBooking() {
                 </div>
                 <div className='flex flex-col max-md:flex-row justify-between max-md:mt-5 h-full md:relative'>
                     <p className='text-2xl md:absolute top-0 right-0'>
-                        {booking.show.showPrice}{currency}
+                        {currency}{booking.show.showPrice}
                     </p>
                     <span></span> 
-                        {!booking.isPaid && <button className='w-[7rem] md:absolute right-0 top-[30%] px-4.5 py-2 rounded-full cursor-pointer font-medium bg-primary hover:bg-primary-dull transition'>Pay Now</button>}
+                        {!booking.isPaid && <button className='w-28 md:absolute right-0 top-[30%] px-4.5 py-2 rounded-full cursor-pointer font-medium bg-primary hover:bg-primary-dull transition'>Pay Now</button>}
                         {booking.isPaid && <div className='flex text-sm text-primary justify-end items-center mt-10 gap-1'>Payment Completed <Check className='w-5 h-5'/></div>}
                     <div>
                         <p className='text-sm text-gray-400'>Total Tickets:{' '} <span className=' text-white text-[1rem]'>{booking.bookedSeats.length}</span></p>

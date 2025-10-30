@@ -1,38 +1,42 @@
 import React, { useEffect, useState } from 'react'
-import { dummyShowsData } from '../../assets/assets';
 import Loading from '../../components/Loading';
 import { dateFormat } from '../../lib/DateFormat';
+import toast from 'react-hot-toast';
+import {useAppContext} from '../../../context/appContext'
+
 
 function ListShows() {
+
+  const {axios, getToken, user} = useAppContext();
+
   const currency = import.meta.env.VITE_CURRENCY;
   const [shows, setShows] = useState([]);
   const [loading, setLoading] = useState(true);
+
+
   const fetchData = async ()=>{
-      try{
-
-        setShows([{
-          movie: dummyShowsData[0],
-          showDateTime: "2025-06-30T15:30:00.000Z",
-          showPrice:59,
-          occupiedSeats:{
-            A1:"user_1",
-            B1:"user_2",
-            C1:"user_3"
-           }
-
-        }])
-      }
-      catch(error){
-        console.error(error);
-      }
-      finally{
-        setLoading(false);
-      }
+   try {
+    const token = await getToken();
+    const {data} = await axios.get('/api/admin/all-shows',{headers:{
+      Authorization: `Bearer ${token}`
+    }})
+    if(data.success){
+      setShows(data.shows);
+      setLoading(false);
+    }  
+   } catch (error) {
+    console.error(error);
+    toast.error('Fetching failed');
+   }
+  
   }
 
   useEffect(()=>{
-    fetchData()
+    if(user){
+    fetchData()}
   }, []);
+
+  
   return !loading ? (
     <div className='flex flex-col mt-10'>
        <p className='font-semibold text-2xl mb-8'>List Shows</p>
@@ -53,7 +57,7 @@ function ListShows() {
                   <td className='p-2 min-w-45 pl-5'>{show.movie.title}</td>
                   <td className='p-2'>{dateFormat(show.showDateTime)}</td>
                   <td className='p-2'>{Object.keys(show.occupiedSeats).length}</td>
-                  <td className='p-2'>{Object.keys(show.occupiedSeats).length * show.showPrice} {currency}</td>
+                  <td className='p-2'>{currency}{Object.keys(show.occupiedSeats).length * show.showPrice}</td>
                 </tr>
               ))}
             </tbody>

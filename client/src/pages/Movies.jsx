@@ -1,9 +1,14 @@
-import React from 'react'
-import { dummyShowsData } from '../assets/assets'
+import React, { useEffect } from 'react'
 import MovieCard from '../components/MovieCard';
+import { useAppContext } from '../../context/appContext';
 
 function Movies() {
-     const movies = dummyShowsData;
+     const {shows} = useAppContext();
+     const movies = shows;
+     
+     useEffect(() => {
+       console.log('Movies data:', movies);
+     }, [movies]);
   return movies.length > 0 ? (
     <div className='mt-30 h-auto flex flex-col items-center'>
       <div className='w-280 flex justify-between'>

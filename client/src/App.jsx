@@ -45,7 +45,7 @@ function App() {
          element={<SeatLayout/>}/>
 
          <Route path='/admin/*' element={user?<Layout/>:(
-          <div>
+          <div className ='w-full min-h-screen flex justify-center items-center'>
             <SignIn fallbackRedirectUrl={'/admin'}/>
           </div>
          )}>

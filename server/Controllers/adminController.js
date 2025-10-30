@@ -1,5 +1,6 @@
 import Booking from "../model/Booking.js"
 import Show from "../model/Show.js"
+import User from "../model/User.js"
 
 //API check if user is admin
 export const isAdmin = async (req, res)=>{
@@ -11,7 +12,7 @@ export const getDashboardData = async (req, res)=>{
   try{
     const bookings = await Booking.find({isPaid: true})
     const activeShows = await Show.find({showDateTime: {$gte: new Date()}}).populate('movie');
-    const totalUsers = await User.countDocument();
+    const totalUsers = await User.countDocuments();
     
     const dashboardData ={
       totalBookings: bookings.length,
@@ -43,7 +44,7 @@ export const getAllBookings = async (req, res)=>{
   try {
     const bookings = await Booking.find({}).populate('user').populate({path: "show",
                                                                       populate: {path: "movie"} //lấy tất cả dữ liệu booking bao gồm tất cả dữ liệu trong model user và dữ liệu của bộ phim (ở đây sử dụng phương pháp tham chiếu lồng nên hơi khó hiểu 1 tý nhưng nếu hiểu ref rồi thì dễ thôi)
-    }).sort({createAt: -1})//xắp sếp dựa trên thời gian tạo
+    }).sort({createdAt: -1})//xắp sếp dựa trên thời gian tạo
     res.json({success: true, bookings})
   } catch (error) {
     console.error(error);

@@ -8,13 +8,25 @@ const clerkClient = createClerkClient({
   publishableKey: process.env.CLERK_PUBLISHABLE_KEY,
 });
 
+const getAuthData = (req) => {
+  if (!req) return {};
+  if (typeof req.auth === "function") {
+    return req.auth() || {};
+  }
+  return req.auth || {};
+};
+
 //API to Get User Booking
 export const getUserBookings = async (req, res)=>{
   try {
-      const user = req.auth().userId;
+      const { userId } = getAuthData(req);
+      if(!userId){
+        return res.json({success: false, message:"not authenticated"});
+      }
+      const user = userId;
       
-      const booking = await Booking.find({user}).populate({path: 'show', populate:{path: 'movie'}}).sort({createAt: -1})
-      res.json({seccess:true, booking});
+      const booking = await Booking.find({user}).populate({path: 'show', populate:{path: 'movie'}}).sort({createdAt: -1})
+      res.json({success:true, booking});
   } catch (error) {
     console.error(error.message);
     res.json({success: false, message: error.message})
@@ -25,9 +37,12 @@ export const getUserBookings = async (req, res)=>{
 export const addFavorite = async (req, res)=>{
   try {
     const {movieId} =req.body;
-    const userId = req.auth().userId;
+    const { userId } = getAuthData(req);
+    if(!userId){
+      return res.json({success: false, message:"not authenticated"});
+    }
 
-    const user = await clerkClient.users.getUser(userId)//
+    const user = await clerkClient.users.getUser(userId)
     if(!user.privateMetadata.favorites){ //nếu trong favorites chx tồn tại movie nào thì tạo 1 mảng
       user.privateMetadata.favorites = [];
     } 
@@ -47,7 +62,11 @@ export const addFavorite = async (req, res)=>{
 
 export const getFavorites = async (req, res)=>{
   try {
-    const user = await clerkClient.users.getUser(req.auth().userId);
+    const { userId } = getAuthData(req);
+    if(!userId){
+      return res.json({success: false, message:"not authenticated"});
+    }
+    const user = await clerkClient.users.getUser(userId);
     const favorites = user.privateMetadata?.favorites || [];
     //get movies from database
     const movies = await Movie.find({_id:{$in: favorites}})

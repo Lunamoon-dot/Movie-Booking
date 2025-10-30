@@ -5,6 +5,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
 axios.defaults.baseURL= import.meta.env.VITE_BASE_URL;
+const img_base_url = import.meta.env.VITE_TMDB_IMAGE_BASE_URL;
 
 export const AppContext = createContext();
  export const AppProvider = ({children})=>{
@@ -29,7 +30,7 @@ export const AppContext = createContext();
       }
       
       if(!data.isAdmin && location.pathname.startsWith('/admin')){
-        navigate('/')
+        navigate('/');
         toast.error('You are not authorized')
       }
     } catch (error) {
@@ -68,6 +69,46 @@ export const AppContext = createContext();
     }
   }
 
+  const toggleFavorite = async (movieId, movieObject = null) => {
+    // Optimistic update - cập nhật UI ngay lập tức
+    const isCurrentlyFavorite = favorites.some(movie => movie._id === movieId);
+    const previousFavorites = [...favorites]; // Backup để revert nếu cần
+    
+    if (isCurrentlyFavorite) {
+      // Xóa khỏi favorites ngay lập tức
+      setFavorites(favorites.filter(movie => movie._id !== movieId));
+    } else {
+      // Thêm vào favorites ngay lập tức
+      const movieToAdd = movieObject || shows.find(show => show._id === movieId);
+      if (movieToAdd) {
+        setFavorites([...favorites, movieToAdd]);
+      }
+    }
+
+    try {
+      const token = await getToken();
+      const {data} = await axios.post('/api/user/update-favorite', 
+        {movieId},
+        {headers: {Authorization:`Bearer ${token}`}}
+      )
+      
+      if(!data.success){
+        // Nếu API fail, revert lại state cũ
+        setFavorites(previousFavorites);
+        toast.error(data.message);
+      }
+    } catch (error) {
+      // Nếu có lỗi, revert lại state cũ
+      setFavorites(previousFavorites);
+      console.error(error);
+      toast.error('Failed to update favorites');
+    }
+  }
+
+  const isFavorite = (movieId) => {
+    return favorites.some(movie => movie._id === movieId);
+  }
+
 
 
   useEffect(()=>{
@@ -75,17 +116,17 @@ export const AppContext = createContext();
       fetchIsAdmin();
       fetchFavorites();
     }
-  },[user, getToken, location, navigate])
+  },[user])
 
   useEffect(()=>{
     fetchShows();
   }, [])
 
   const value ={axios,
-                fetchFavorites,favorites,
+                fetchFavorites,favorites,toggleFavorite,isFavorite,
                 fetchIsAdmin,isAdmin,
                 user, getToken, navigate,
-                shows, 
+                shows, img_base_url,
 
   }
   return(
@@ -95,4 +136,4 @@ export const AppContext = createContext();
   )
  }
 
- export const useAppContext = ()=> useContext(AppContext);
+export const useAppContext = ()=> useContext(AppContext);//tóm gọn khi gọi
