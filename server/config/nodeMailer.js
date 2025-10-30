@@ -1,7 +1,7 @@
 import nodemailer from 'nodemailer'
 
 const transporter = nodemailer.createTransport({
-  host: "smtp-relay.brevo.com",
+  host: "sandbox.smtp.mailtrap.io",
   port: 587,
   secure: false, // upgrade later with STARTTLS
   auth: {
