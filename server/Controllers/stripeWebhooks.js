@@ -30,6 +30,7 @@ const markBookingAsPaid = async (bookingId) => {
   console.log(`Booking ${bookingId} updated to Paid via Stripe webhook.`);
 };
 
+
 export const stripeWebhooks = async (request, response)=>{
     const stripeInstance = new Stripe(process.env.STRIPE_SECRET_KEY);
     const sig = request.headers["stripe-signature"];
