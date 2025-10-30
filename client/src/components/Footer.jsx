@@ -1,13 +1,20 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 function Footer() {
   return (
     <footer className="px-6 pt-8 md:px-16 lg:px-36 w-full mt-60 text-gray-300">
           <div className="flex flex-col md:flex-row justify-between w-full gap-10 border-b border-gray-500 pb-10">
               <div className="md:max-w-96">
-                  <img alt="" class="h-11" src="" />
+                 <Link to="/" className='max-md:flex-1 flex items-end gap-2'>
+                    <img src='/image.png' alt=""  className='w-10 h-auto'/>
+                    <div className='flex flex-col items-end justify-end h-full'>
+                        <p className='text-2xl font-medium'> <span className='text-primary-dull text-3xl font-bold'>Owl</span>Cinema</p>
+                    </div>
+               </Link>
                   <p className="mt-6 text-sm">
-                      Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                    OwlCinema is a group project developed by second-year students from the University of Transport and Communications.
+                    This website focuses on the process of booking movie tickets. Not only that, admins can also add new shows, manage revenue, and track various related activities within the system.
                   </p>
               </div>
               <div className="flex-1 flex items-start md:justify-end gap-20 md:gap-40">
@@ -24,8 +31,8 @@ function Footer() {
                   <div>
                       <h2 className="font-semibold mb-5">Get in touch</h2>
                       <div className="text-sm space-y-2">
-                          <p>+1-234-567-890</p>
-                          <p>team.com</p>
+                          <p>+3636363636</p>
+                          <p>team9@gmail.com</p>
                       </div>
                   </div>
               </div>

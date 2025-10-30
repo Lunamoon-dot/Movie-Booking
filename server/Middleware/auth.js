@@ -15,7 +15,7 @@ export const protectUser = async (req, res, next) =>{
     next();
   }
   catch(error){
-    console.error("Error in protectUser:", error.message);
+    console.error("Error in protectUser:", error);
     res.json({success:false, message: error.message})
   }
 }
@@ -35,7 +35,7 @@ export const protectAdmin = async (req, res, next) =>{
     next();
   }
   catch(error){
-    console.error("Error in protectAdmin:", error.message);
+    console.error("Error in protectAdmin:", error);
     res.json({success:false, message: error.message})
   }
 }
