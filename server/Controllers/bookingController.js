@@ -1,3 +1,4 @@
+import { inngest } from "../inngest/index.js";
 import Booking from "../model/Booking.js";
 import Show from "../model/Show.js";
 import Stripe from 'stripe';
@@ -36,7 +37,7 @@ export const creatingBooking = async(req, res)=>{
       show:showId,
       amount:showData.showPrice*selectedSeats.length,
       bookedSeats: selectedSeats,
-      isPaid:false,//
+      isPaid: false
     }) 
 
     selectedSeats.map((seat)=>{
@@ -61,18 +62,30 @@ export const creatingBooking = async(req, res)=>{
     }]
 
     const session = await stripeInstance.checkout.sessions.create({
-      success_url: `${origin}/loading/my-booking`,
+      success_url: `${origin}/loading/my-booking?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${origin}/my-booking`,
       line_items:line_items,
       mode:'payment',
       metadata:{
         bookingId: booking._id.toString(),
       },
+      payment_intent_data:{
+        metadata:{
+          bookingId: booking._id.toString(),
+        }
+      },
       expires_at: Math.floor(Date.now()/1000)+ 30*60, //expired time
     })
 
     booking.paymentLink = session.url
     await booking.save();
+    //run time out
+    await inngest.send({
+      name:"app/checkpayment",
+      data:{
+        bookingId:booking._id.toString()
+      }
+    })
 
     res.json({success:true, url:session.url })
   }
@@ -92,5 +105,37 @@ export const getOccupiedSeats = async (req, res)=>{
   catch(error){
     console.log(error.message);
     res.json({success:false,message: error.message})
+  }
+}
+
+// Confirm Checkout session (fallback if webhook doesn't reach server)
+export const confirmCheckoutSession = async (req, res) => {
+  try {
+    const { sessionId } = req.body;
+    if (!sessionId) {
+      return res.status(400).json({ success: false, message: 'sessionId is required' });
+    }
+
+    const stripeInstance = new Stripe(process.env.STRIPE_SECRET_KEY);
+    const session = await stripeInstance.checkout.sessions.retrieve(sessionId);
+
+    if (!session) {
+      return res.status(404).json({ success: false, message: 'Session not found' });
+    }
+
+    const isPaid = session.payment_status === 'paid';
+    const bookingId = session.metadata?.bookingId;
+
+    if (isPaid && bookingId) {
+      const booking = await Booking.findById(bookingId);
+      if (booking && !booking.isPaid) {
+        await Booking.findByIdAndUpdate(bookingId, { isPaid: true, paymentLink: '' });
+      }
+    }
+
+    res.json({ success: true, paid: isPaid });
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).json({ success: false, message: error.message });
   }
 }

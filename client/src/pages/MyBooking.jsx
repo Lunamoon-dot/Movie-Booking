@@ -4,6 +4,7 @@ import { Star,Check } from 'lucide-react'
 import { dateFormat } from '../lib/DateFormat'  
 import { useAppContext } from '../../context/appContext'
 import toast from 'react-hot-toast'
+import { Link } from 'react-router-dom'
 
 
 function MyBooking() {
@@ -36,17 +37,18 @@ function MyBooking() {
   }, [user])
 
   return !loading ? (
-    <div className='flex flex-col justify-center items-center gap-8 h-screen'>
-        <p className='text-3xl font-semibold'>My Booking</p>
-      {bookings.length === 0 ? (
-        <div className='text-center text-gray-400'>
-          <p className='text-xl mb-2'>No bookings found</p>
-          <p className='text-sm'>Your movie bookings will appear here</p>
-        </div>
-      ) : (
-      <div className='flex flex-col h-screen gap-4 px-4 items-centerrounded-xl overflow-y-auto'>
-        {bookings.map((booking, index) => (
-          <div key={index} className='w-full  max-w-4xl bg-primary/10 border border-primary/20 rounded-lg p-6 backdrop-blur-sm'>
+    <div className='w-full min-h-screen flex justify-center px-4 md:px-8 lg:px-12'>
+      <div className='w-full max-w-4xl flex flex-col gap-8 items-center'>
+        <p className='text-3xl font-semibold text-center mt-30'>My Booking</p>
+        {bookings.length === 0 ? (
+          <div className='text-center text-gray-400'>
+            <p className='text-xl mb-2'>No bookings found</p>
+            <p className='text-sm'>Your movie bookings will appear here</p>
+          </div>
+        ) : (
+        <div className='flex flex-col gap-4 w-full'>
+          {bookings.map((booking, index) => (
+            <div key={index} className='w-full bg-primary/10 border border-primary/20 rounded-lg p-6 backdrop-blur-sm'>
             <div className='flex flex-col md:flex-row gap-6'>
               {/* Movie Poster */}
               <div className='shrink-0'>
@@ -82,8 +84,9 @@ function MyBooking() {
                         {currency}{booking.show.showPrice}
                     </p>
                     <span></span> 
-                        {!booking.isPaid && <button className='w-28 md:absolute right-0 top-[30%] px-4.5 py-2 rounded-full cursor-pointer font-medium bg-primary hover:bg-primary-dull transition'>Pay Now</button>}
-                        {booking.isPaid && <div className='flex text-sm text-primary justify-end items-center mt-10 gap-1'>Payment Completed <Check className='w-5 h-5'/></div>}
+                        {!booking.isPaid && <Link  to={booking.paymentLink} className='w-28 md:absolute right-0 top-[30%] px-4.5 py-2 text-center rounded-full cursor-pointer font-medium bg-primary hover:bg-primary-dull transition'>Pay Now</Link>}
+                        {booking.isPaid && <div className='flex text-sm text-primary justify-end items-center mt-10 gap-1'>Payment Completed <Check className='w-5 h-5'/>
+                        </div>}
                     <div>
                         <p className='text-sm text-gray-400'>Total Tickets:{' '} <span className=' text-white text-[1rem]'>{booking.bookedSeats.length}</span></p>
                         <p className='text-sm text-gray-400'>{' '}Seat Number:<span className=' text-white'>{booking.bookedSeats.join(',')}</span></p>
@@ -95,8 +98,9 @@ function MyBooking() {
                 
               </div>
             </div>
-        ))}</div>
-      )}
+          ))}</div>
+        )}
+      </div>
     </div>
   ) : <Loading/>
 }
