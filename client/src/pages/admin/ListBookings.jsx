@@ -1,21 +1,37 @@
 import React, { useEffect, useState } from 'react'
-import { dummyBookingData, dummyShowsData } from '../../assets/assets';
 import Loading from '../../components/Loading';
 import { dateFormat2 } from '../../lib/DateFormat';
+import {useAppContext} from '../../../context/appContext'
+import toast from 'react-hot-toast';
+
 
 function ListBookings() {
+  const {axios, getToken, user} = useAppContext();
+
   const currency = import.meta.env.VITE_CURRENCY;
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
   const fetchData = async ()=>{
-    // await new Promise(resolve => setTimeout(resolve, 500)); mo phong goi api
+    try {
+      const token = await getToken();
+      const {data} = await axios.get('/api/admin/all-bookings',{headers:{
+        Authorization: `Bearer ${token}`
+      }})
+      if(data.success){
+        setBookings(data.bookings);
+        setLoading(false);
+      }  
+    } catch (error) {
+      console.error(error);
+      toast.error('Fetching failed');
+    }
     
-    setBookings(dummyBookingData);
-    setLoading(false);
   }
 
   useEffect(()=>{
-    fetchData()
+    if(user){
+      fetchData()
+    }
   }, []);
   return !loading ? (
     <div className='flex flex-col mt-10'>
@@ -38,8 +54,8 @@ function ListBookings() {
                   <td className='p-2 min-w-45 pl-5'>{booking.user.name}</td>
                   <td className='p-2'>{booking.show.movie.title}</td>
                   <td className='p-2'>{dateFormat2(booking.show.showDateTime)}</td>
-                  <td className='p-2'>{booking.bookedSeats.join(',')}</td>
-                  <td className='p-2'>{booking.amount}{currency}</td>
+                  <td className='p-2'>{booking.bookedSeats.join(', ')}</td>
+                  <td className='p-2'>{currency}{booking.amount}</td>
                 </tr>
               ))}
             </tbody>

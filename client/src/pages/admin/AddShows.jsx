@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { dummyShowsData } from '../../assets/assets';
 import Loading from '../../components/Loading';
 import { Star,Check, DeleteIcon } from 'lucide-react';
 import { KConverter } from '../../lib/ConverterK';
 import toast from 'react-hot-toast'; // Đảm bảo bạn đã cài đặt và cấu hình react-hot-toast
+import {useAppContext} from '../../../context/appContext'
 
 function AddShows() {
+
+  const {axios, getToken, user,img_base_url} = useAppContext();
+
   const currency = import.meta.env.VITE_CURRENCY;
 
   const [nowPlayingMovies, setNowPlayingMovies] = useState([]);
@@ -14,9 +17,54 @@ function AddShows() {
   const [dateTimeInput, setDateTimeInput] = useState("");
   const [showPrice, setShowPrice] = useState("");
 
+  const [addingShow, setAddingShow] = useState(false);
+
+  const handleSubmit = async ()=>{
+    try {
+      if(!selectedMovie || !showPrice || Object.keys(dateTimeSelection).length === 0){
+        return toast.error('Missing required fields')
+      }
+      setAddingShow(true)
+      const showsInput = Object.entries(dateTimeSelection).map(([date, times])=>(
+        {date, time: times}
+      ));
+      const payload = {
+          movieId: selectedMovie,
+          showsInput,
+          showPrice: Number(showPrice)
+      }
+      // TODO: Add API call here
+      const token = await getToken();
+      const {data} = await axios.post('/api/show/add', payload, {headers:{
+        Authorization: `Bearer ${token}`
+      }})
+      if(data.success){
+        toast.success('Movie added successfully')
+        setSelectedMovie(null);
+        setShowPrice('');
+        setDateTimeSelection({});
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error('An error occurred. Please try again.')
+    } finally {
+      setAddingShow(false);
+    }
+  }
+
   const fetchData = async()=>{
     // Giả sử dummyShowsData chứa dữ liệu phim
-    setNowPlayingMovies(dummyShowsData);
+    try {
+      const token = await getToken();
+      const {data} = await axios.get('/api/show/now-playing', {headers:{
+        Authorization: `Bearer ${token}`
+      }})
+      if(data.success){
+        setNowPlayingMovies(data.movies);
+      }
+    } catch (error) {
+      console.error('Movies fetching failed', error)
+    }
   }
 
   // CẬP NHẬT: Tách logic kiểm tra trùng lặp  và thông báo lỗi ra khỏi setDateTimeSelection
@@ -24,15 +72,13 @@ function AddShows() {
     if(!dateTimeInput) return;
     const [date, time] = dateTimeInput.split("T");
     if(!date || !time) return;
-    
+    setDateTimeInput('');
     // 1. Kiểm tra trùng lặp trước khi gọi setDateTimeSelection
     const times = dateTimeSelection[date] || [];
 
     if(times.includes(time)){
       // Nếu trùng, thông báo lỗi và dừng hàm
       toast.error('Ngày và giờ này đã được thêm.');
-      setDateTimeInput(''); // Reset input sau khi kiểm tra
-      setShowPrice('');
       return; 
     }
 
@@ -44,7 +90,6 @@ function AddShows() {
       };
     });
 
-    setDateTimeInput('');
     toast.success('Đã thêm giờ chiếu mới.');
   }
 
@@ -64,7 +109,10 @@ function AddShows() {
   }
 
   useEffect(()=>{
-    fetchData();
+    if(user){
+      fetchData(); //đề phòng việc bị gọi api liên tục bởi attacker, thật ra user vẫn gửi đc nhưng sẽ bị chặn ở BE và có thể truy vết ai gửi
+    }
+    
   },[])
 
   return nowPlayingMovies.length > 0 ?(
@@ -82,7 +130,7 @@ function AddShows() {
             onClick={(()=> setSelectedMovie(item.id))}
           >
             <div className='relative overflow-hidden rounded-lg'>
-             <img src={item.poster_path} alt={item.title}  className='object-cover w-full h-full brightness-90'/>
+             <img src={img_base_url + item.poster_path} alt={item.title}  className='object-cover w-full h-full brightness-90'/>
              {/* Div overlay */}
              <div className='flex absolute bottom-0 left-0 w-full bg-black/70 item-center justify-between mt-2 px-2 py-3'>
               <div className='flex items-center gap-1 text-white'>
@@ -171,11 +219,15 @@ function AddShows() {
     }
 
     {/* Nút cuối cùng */}
-    <button className={`w-full max-w-sm px-4 py-3 bg-primary text-white font-semibold rounded-md mt-10 transition duration-300 ease-in hover:bg-primary/80 ${(!selectedMovie || !showPrice || Object.keys(dateTimeSelection).length === 0) ? 'opacity-50 cursor-not-allowed' : ''}`}>
-      Add Show
+    <button 
+      disabled={addingShow || !selectedMovie || !showPrice || Object.keys(dateTimeSelection).length === 0} 
+      onClick={handleSubmit} 
+      className={`w-full max-w-sm px-4 py-3 bg-primary text-white font-semibold rounded-md mt-10 transition duration-300 ease-in hover:bg-primary/80 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-primary`}
+    >
+      {addingShow ? 'Adding...' : 'Add Show'}
     </button>
    </div>
-  ):<Loading/>
+  ):(<Loading/>)
 }
 
 export default AddShows;

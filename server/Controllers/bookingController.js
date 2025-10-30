@@ -27,7 +27,7 @@ export const creatingBooking = async(req, res)=>{
     if(!isAvailable){
       return res.json({success:false, message: "Selected seat is not available"})
     }
-    const showData = await Show.findbyId(showId).populate('movie');
+    const showData = await Show.findById(showId).populate('movie');
 
     //create new booking
     const booking = await Booking.create({ //luu du lieu vo booking
@@ -35,6 +35,7 @@ export const creatingBooking = async(req, res)=>{
       show:showId,
       amount:showData.showPrice*selectedSeats.length,
       bookedSeats: selectedSeats,
+      isPaid:false,
     }) 
 
     selectedSeats.map((seat)=>{
@@ -54,7 +55,7 @@ export const creatingBooking = async(req, res)=>{
 export const getOccupiedSeats = async (req, res)=>{
   try{
     const {showId} = req.params;
-    const showData = await Show.findbyId(showId)
+    const showData = await Show.findById(showId)
     const occupiedSeats = Object.keys(showData.occupiedSeats)
     res.json({success: true, occupiedSeats})
   }

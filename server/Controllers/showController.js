@@ -51,6 +51,7 @@ export const addShow = async (req, res)=>{
         overview: movieApiData.overview,
         poster_path: movieApiData.poster_path,
         backdrop_path:movieApiData.backdrop_path,
+        genres: movieApiData.genres,
         casts: movieCreditData.cast,
         release_date:movieApiData.release_date,
         original_language: movieApiData.original_language,
@@ -109,8 +110,8 @@ export const getShows = async (req, res)=>{
 export const getShow = async (req, res) =>{
   try{
     const {movieId} = req.params;
-    const shows = await Show.find({movieId, showDateTime: {$gte: new Date()}})
-    const movie = await Movie.findById({movieId}) // chx hieu
+    const shows = await Show.find({movie: movieId, showDateTime: {$gte: new Date()}})
+    const movie = await Movie.findById(movieId)
     const dateTime = {};
 
     shows.forEach((show)=>{
@@ -120,7 +121,7 @@ export const getShow = async (req, res) =>{
         }
         dateTime[date].push({time: show.showDateTime, showId: show._id})//sau đó nó sẽ đẩy object trên vào 
     })
-    res.json({success: true, dateTime})
+    res.json({success: true, dateTime, movie})
   }
   catch(error){
     console.log(error);

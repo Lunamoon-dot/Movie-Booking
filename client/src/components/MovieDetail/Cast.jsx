@@ -1,7 +1,10 @@
 import { ArrowLeft, ArrowRight } from 'lucide-react'
 import React, { useState } from 'react'
+import { useAppContext } from '../../../context/appContext'
+import profileImg from '../../assets/profile.png'
 
 export default function Cast({show}) {
+  const {img_base_url} = useAppContext();
   const [limit, setLimit]= useState(6);
   const [arrow, setArrow] = useState(true);
   return (
@@ -13,7 +16,7 @@ export default function Cast({show}) {
         {show.casts.slice(0, limit).map((cast,index)=>(
           <div key={index} className='flex'>
             <div className='flex flex-col items-center'>
-              <img src={cast.profile_path} alt="" className='w-20 rounded-full aspect-square object-cover'/>
+              <img src={cast.profile_path ? img_base_url + cast.profile_path : profileImg} alt="" className='w-20 rounded-full aspect-square object-cover'/>
               <p>{cast.name}</p>
             </div>
           </div>

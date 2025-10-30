@@ -6,6 +6,20 @@ const clerkClient = createClerkClient({
   publishableKey: process.env.CLERK_PUBLISHABLE_KEY,
 });
 
+export const protectUser = async (req, res, next) =>{
+  try{
+    const {userId} = req.auth();
+    if(!userId){
+      return res.json({success: false, message:"not authenticated"})
+    }
+    next();
+  }
+  catch(error){
+    console.error("Error in protectUser:", error.message);
+    res.json({success:false, message: error.message})
+  }
+}
+
 export const protectAdmin = async (req, res, next) =>{
   try{
     const {userId} = req.auth();

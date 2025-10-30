@@ -1,9 +1,11 @@
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import React, { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAppContext } from '../../context/appContext';
 
 function MoviesRecommendation({ movies, id }) {
   const navigate = useNavigate();
+  const {img_base_url} = useAppContext();
   const scrollRef = useRef(null);
 
   const scrollLeft = () => {
@@ -38,9 +40,9 @@ function MoviesRecommendation({ movies, id }) {
       >
         {movies.map((movie, index) => (
           movie._id !== id && (
-            <div onClick={()=>{navigate(`/movie-detail/${movie.id}/1`); scrollTo(0, 0)}} key={index} className="shrink-0 flex flex-col gap-2 w-48 cursor-pointer hover:scale-105 transition ease-in-out">
+            <div onClick={()=>{navigate(`/movie-detail/${movie._id}/1`); scrollTo(0, 0)}} key={index} className="shrink-0 flex flex-col gap-2 w-48 cursor-pointer hover:scale-105 transition ease-in-out">
               <img
-                src={movie.poster_path}
+                src={img_base_url + movie.poster_path}
                 alt={movie.title}
                 className="rounded-xl object-cover w-full h-72"
               />

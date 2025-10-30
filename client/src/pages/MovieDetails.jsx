@@ -1,25 +1,34 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { dummyDateTimeData, dummyShowsData } from '../assets/assets';
 import FrontDetail from '../components/MovieDetail/FrontDetail';
 import Cast from '../components/MovieDetail/Cast';
 import DateSelect from '../components/MovieDetail/DateSelect';
 import Loading from '../components/Loading';
 import MoviesRecommendation from '../components/MoviesRecommendation'
+import { useAppContext } from '../../context/appContext';
+import toast from 'react-hot-toast';
 
 
 function MovieDetails() {
   const {id} = useParams();
   const [show, setShow] = useState(null);
+  const {axios, shows} = useAppContext();
 
   const getShow = async ()=>{
-    const showdetail = dummyShowsData.find(show => show._id === id);
-    if (showdetail) {
-      setShow({
-        movie: showdetail,
-        dateTime: dummyDateTimeData
-      })
-    } else {
+    try {
+      const {data} = await axios.get(`/api/show/${id}`);
+      if (data.success) {
+        setShow({
+          movie: data.movie,
+          dateTime: data.dateTime
+        })
+      } else {
+        toast.error(data.message);
+        setShow(null);
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error('Failed to fetch movie details');
       setShow(null);
     }
   }
@@ -42,7 +51,7 @@ function MovieDetails() {
      <FrontDetail show={show.movie}/>
      <Cast show={show.movie}/>
      <DateSelect id={id} dateTime={show.dateTime}/>   
-    <MoviesRecommendation id ={id} movies ={dummyShowsData}/>
+    <MoviesRecommendation id ={id} movies ={shows}/>
     </div>
   ) : (
     <Loading/>
