@@ -1,5 +1,6 @@
 import Booking from "../model/Booking.js";
-import Show from "../model/Show.js"
+import Show from "../model/Show.js";
+import Stripe from 'stripe';
 
 
 const checkSeatAvailability =async (showId, selectedSeats) =>{
@@ -35,7 +36,7 @@ export const creatingBooking = async(req, res)=>{
       show:showId,
       amount:showData.showPrice*selectedSeats.length,
       bookedSeats: selectedSeats,
-      isPaid:false,
+      isPaid:false,//
     }) 
 
     selectedSeats.map((seat)=>{
@@ -44,7 +45,36 @@ export const creatingBooking = async(req, res)=>{
     showData.markModified('occupiedSeats');//dam bao database luu du lieu nay khi save
     await showData.save();
 
-    res.json({success:true, message: 'Booked successfully'})
+    //Stripe Gateway
+    const stripeInstance = new Stripe(process.env.STRIPE_SECRET_KEY)
+
+    //Creating line items 
+    const line_items =  [{
+      price_data:{
+        currency: 'usd',
+        product_data:{
+          name: showData.movie.title
+        },
+        unit_amount: Math.floor(booking.amount)*100,
+      },
+      quantity: 1
+    }]
+
+    const session = await stripeInstance.checkout.sessions.create({
+      success_url: `${origin}/loading/my-booking`,
+      cancel_url: `${origin}/my-booking`,
+      line_items:line_items,
+      mode:'payment',
+      metadata:{
+        bookingId: booking._id.toString(),
+      },
+      expires_at: Math.floor(Date.now()/1000)+ 30*60, //expired time
+    })
+
+    booking.paymentLink = session.url
+    await booking.save();
+
+    res.json({success:true, url:session.url })
   }
   catch(error){
     console.log(error.message);

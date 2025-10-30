@@ -16,6 +16,7 @@ import ListBookings from './pages/admin/ListBookings'
 import AddShows from './pages/admin/AddShows'
 import { SignIn } from '@clerk/clerk-react'
 import { useAppContext } from '../context/appContext'
+import Loading from './components/Loading'
 
 
 function App() {
@@ -43,6 +44,8 @@ function App() {
 
         <Route path='/seat-layout/:id/:date'
          element={<SeatLayout/>}/>
+
+         <Route path='/loading/:nextUrl' element={<Loading/>}/>
 
          <Route path='/admin/*' element={user?<Layout/>:(
           <div className ='w-full min-h-screen flex justify-center items-center'>

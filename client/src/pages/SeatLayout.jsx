@@ -84,8 +84,7 @@ function SeatLayout() {
         }
       });
       if(data.success){
-        toast.success(data.message || "Booking successful!");
-        navigate('/my-booking');
+        window.location.href = data.url;
       } else {
         toast.error(data.message || "Booking failed");
       }

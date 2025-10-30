@@ -1,81 +1,48 @@
 import express from 'express';
 import cors from 'cors';
-import 'dotenv/config'; 
-import connectDB from './config/db.js'; 
-import { clerkMiddleware } from '@clerk/express';
+import 'dotenv/config';
+import connectDB from './config/db.js'; //can than duoi
+import { clerkMiddleware } from '@clerk/express'
 import { serve } from "inngest/express";
-import { inngest, functions } from "./inngest/index.js";
-
-// Import Routes
+import { inngest, functions } from "./inngest/index.js"
 import showRouter from './Routes/showRoutes.js';
 import bookingRouter from './Routes/bookingRoutes.js';
 import adminRouter from './Routes/adminRoutes.js';
 import userRouter from './Routes/userRoutes.js';
+import { stripeWebhooks } from './Controllers/stripeWebhooks.js';
 
-// --- PHẦN KHỞI TẠO CHẠY 1 LẦN (Initialization) ---
-// Định nghĩa ứng dụng Express
-const app = express();
+const app =express();
+const PORT =3000;
 
-// Kiểm tra Biến Môi trường và Kết nối DB
-// Đặt biến cờ để đảm bảo chỉ kết nối DB một lần
-let isDbConnected = false; 
-
-/**
- * Hàm khởi tạo bất đồng bộ để thiết lập DB và kiểm tra biến môi trường.
- * Hàm này sẽ chạy khi module được import lần đầu (Vercel Cold Start).
- */
-async function initializeApp() {
-    // 1. Kiểm tra Biến Môi trường
-    if (!process.env.TMDB_API_KEY || !process.env.MONGODB_URI || !process.env.CLERK_PUBLISHABLE_KEY || !process.env.CLERK_SECRET_KEY) {
-        console.error('❌ Lỗi: Thiếu các biến môi trường cần thiết! Hãy kiểm tra Vercel Environment Variables.');
-        // Trong môi trường serverless, không dùng process.exit(1),
-        // thay vào đó, để hàm tiếp tục, nếu connectDB thất bại nó sẽ tự trả về lỗi.
-        // Bạn cần đảm bảo hàm connectDB tự xử lý và ném lỗi nếu thất bại.
-    }
-
-    // 2. Kết nối Database (Chỉ kết nối nếu chưa kết nối)
-    if (!isDbConnected) {
-        try {
-            console.log('🔗 Đang kết nối đến cơ sở dữ liệu...');
-            await connectDB();
-            isDbConnected = true;
-            console.log('✅ Kết nối DB thành công.');
-        } catch (error) {
-            console.error('💥 Lỗi kết nối CSDL:', error.message);
-            // Ném lỗi để Serverless Function thất bại nếu DB là bắt buộc
-            throw new Error('Database connection failed to initialize.');
-        }
-    }
+// kiem tra xem ket noi duoc key chx
+if (!process.env.TMDB_API_KEY || !process.env.MONGODB_URI || !process.env.CLERK_PUBLISHABLE_KEY || !process.env.CLERK_SECRET_KEY || !process.env.STRIPE_PUBLISHABLE_KEY || !process.env.STRIPE_SECRET_KEY || !process.env.STRIPE_WEBHOOK_SECRET) {
+  console.error('❌ Missing required environment variables!');
+  process.exit(1);
 }
 
+await connectDB();//ket noi database
 
-// --- MIDDLEWARE VÀ ROUTES (Phần định nghĩa ứng dụng) ---
-
-// Gọi hàm khởi tạo ngay
-initializeApp();
+//Stripe
+app.use('/api/stripe', express.raw({type: 'application/json'}), stripeWebhooks)
 
 
-// Middleware
-app.use(express.json());
-app.use(cors());
+//Middleware
+app.use(express.json()); //Vi express default no chx hieu dc du lieu json nen minh cau hinh no nhu tren
+app.use(cors());//Giup cho BE ket noi dc voi FE o cong khac
 app.use(clerkMiddleware());
 
-// API Routes
-app.get('/', (req, res)=> res.send('Serverless Function is live!'));
-
-// Inngest Route
-app.use('/api/inngest', serve({ client: inngest, functions }));
-
-// Custom Routes
+//API Routes
+app.get('/', (req, res)=> res.send('Server is live!'));
+app.use('/api/inngest',  serve({ client: inngest, functions }));
 app.use('/api/show', showRouter);
 app.use('/api/booking', bookingRouter);
 app.use('/api/admin', adminRouter);
 app.use('/api/user', userRouter);
 
+// Start server (for local development)
+  app.listen(PORT, () => {
+    console.log(`✅ Server is running on port ${PORT}`);
+  });
 
-// --- XUẤT ỨNG DỤNG CHO MÔI TRƯỜNG SERVERLESS ---
-// Serverless Function yêu cầu bạn xuất ứng dụng Express thay vì lắng nghe cổng
-// Tên 'handler' hoặc 'default' là quy ước cho builder @vercel/node
+// Export for Vercel serverless
 export default app;
-// Hoặc, nếu sử dụng tên tệp khác ngoài index.js, bạn có thể xuất là module.exports
-// module.exports = app;
