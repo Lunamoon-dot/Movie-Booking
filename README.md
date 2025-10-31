@@ -46,8 +46,8 @@
 
 ### 1. Tải mã nguồn từ repo này
 
-Yêu cầu cài sẵn Node.js và MongoDB trên hệ điều hành (Đã khởi động sẵn).
-
+Yêu cầu cài sẵn Node.js trên hệ điều hành (Đã khởi động sẵn).
+Các biến môi trường em sẽ gửi qua zalo ạ.
 
 ### 2. Chuẩn bị 2 Terminal/PowerShell CLI, ``cd`` đến gốc của source code và gõ lệnh sau:
 
