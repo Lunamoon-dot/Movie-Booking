@@ -20,10 +20,14 @@ function ListBookings() {
       if(data.success){
         setBookings(data.bookings);
         setLoading(false);
+      } else {
+        setLoading(false);
+        toast.error('Failed to load bookings');
       }  
     } catch (error) {
       console.error(error);
       toast.error('Fetching failed');
+      setLoading(false);
     }
     
   }
@@ -31,31 +35,35 @@ function ListBookings() {
   useEffect(()=>{
     if(user){
       fetchData()
+    } else {
+      setLoading(false);
     }
-  }, []);
+  }, [user]);
   return !loading ? (
     <div className='flex flex-col mt-10'>
        <p className='font-semibold text-2xl mb-8'>List Bookings</p>
        <div className='max-w-4xl mt-6 overflow-x-auto'>
 
-          <table className='w-full border-collapse rounded-md overflow-hidden text-nowrap'>
+          <table className='w-full border-collapse rounded-md overflow-hidden'>
             <thead>
             <tr className='bg-primary/30 text-left text-white'>
               <th className='p-2 font-medium pl-5'>User Name</th>
               <th className='p-2 font-medium'>Movie Name</th>
               <th className='p-2 font-medium'>Show Time</th>
               <th className='p-2 font-medium'>Seats</th>
-              <th className='p-2 font-medium'>Amount</th>
+              <th className='p-2 font-medium text-center'>Amount</th>
             </tr>
             </thead>
             <tbody>
               {bookings.map((booking, index)=>(
                 <tr key={index} className={`${index %2 === 0 ?'bg-primary/20':'bg-primary/15'}`}>
-                  <td className='p-2 min-w-45 pl-5'>{booking.user.name}</td>
-                  <td className='p-2'>{booking.show.movie.title}</td>
-                  <td className='p-2'>{dateFormat2(booking.show.showDateTime)}</td>
-                  <td className='p-2'>{booking.bookedSeats.join(', ')}</td>
-                  <td className='p-2'>{currency}{booking.amount}</td>
+                  <td className='p-2 min-w-45 pl-5'>{booking?.user?.name || 'N/A'}</td>
+                  <td className='p-2 max-w-[180px]'>
+                    <div className='truncate'>{booking?.show?.movie?.title || 'N/A'}</div>
+                  </td>
+                  <td className='p-2'>{booking?.show?.showDateTime ? dateFormat2(booking.show.showDateTime) : 'N/A'}</td>
+                  <td className='p-2'>{booking?.bookedSeats?.join(', ') || 'N/A'}</td>
+                  <td className='p-2 text-center'>{currency}{booking?.amount || 0}</td>
                 </tr>
               ))}
             </tbody>
