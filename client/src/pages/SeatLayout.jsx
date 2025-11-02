@@ -183,7 +183,7 @@ function SeatLayout() {
 
 
   return show ? (
-    <div className='flex flex-col md:flex-row px-6 md:px-16 lg:px-40 py-30 md:pt-40'>
+    <div className='flex flex-col md:flex-row px-6 md:px-16 lg:px-40 py-30 md:pt-40 bg-bg-main min-h-screen'>
       {/*Time Choosing*/}
       <div className='flex flex-col gap-8 w-70'>
         <div className='flex items-center justify-center gap-2'>

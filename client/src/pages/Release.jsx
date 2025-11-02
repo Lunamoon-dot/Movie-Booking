@@ -116,7 +116,7 @@ function Release() {
   }
 
   return (
-    <div className='min-h-screen bg-linear-to-br from-bg-gradient-from via-bg-gradient-via to-bg-gradient-to pt-30 pb-20 px-6 md:px-16 lg:px-25'>
+    <div className='min-h-screen bg-bg-main bg-linear-to-br from-bg-gradient-from via-bg-gradient-via to-bg-gradient-to pt-30 pb-20 px-6 md:px-16 lg:px-25'>
       {/* Header */}
       <div className='flex flex-col items-center mb-15'>
         <h1 className='text-5xl font-bold text-white mb-4'>

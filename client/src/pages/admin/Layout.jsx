@@ -8,8 +8,8 @@ function Layout() {
 
 
   return isAdmin ? (
-    <div className='flex flex-col'>
-      <div className='flex min-h-screen'>
+    <div className='flex flex-col bg-bg-main min-h-screen'>
+      <div className='flex flex-1'>
         <AdminSidebar/>
         <div className='flex-1 ml-95 max-w-full overflow-x-auto'>
           <div className='w-full mx-auto'>

@@ -4,7 +4,7 @@ import FeatureSession from '../components/FeatureSession'
 
 function Home() {
   return (
-    <div>
+    <div className='bg-bg-main min-h-screen'>
       <HeroSession/>
       <FeatureSession/>
     </div>

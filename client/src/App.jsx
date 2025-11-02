@@ -48,7 +48,7 @@ function App() {
          <Route path='/loading/:nextUrl' element={<Loading/>}/>
 
          <Route path='/admin/*' element={user?<Layout/>:(
-          <div className ='w-full min-h-screen flex justify-center items-center'>
+          <div className ='w-full min-h-screen flex justify-center items-center bg-bg-main'>
             <SignIn fallbackRedirectUrl={'/admin'}/>
           </div>
          )}>

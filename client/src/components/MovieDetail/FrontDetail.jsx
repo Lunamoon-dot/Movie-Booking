@@ -36,7 +36,7 @@ function FrontDetail({show}) {
           {/* button */}
           <div className='flex mt-5 items-center gap-4'>
             <button className='px-5 py-2  rounded-lg font-semibold transition-all duration-200 border-white border text-white hover:bg-white/20'>Watch Trailer</button>
-            <button className='px-5 py-2 rounded-lg font-semibold transition-all duration-200 bg-primary text-white hover:bg-primary/50'>Buy Tickets</button>
+            <button onClick={()=> scrollTo({top:350})} className='px-5 py-2 rounded-lg font-semibold transition-all duration-200 bg-primary text-white hover:bg-primary/50'>Buy Tickets</button>
             {user && (
               <button 
                 onClick={() => toggleFavorite(show._id, show)}

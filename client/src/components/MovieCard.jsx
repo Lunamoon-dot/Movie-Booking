@@ -37,7 +37,10 @@ const handleFavoriteClick = (e) => {
           {movie.genres?.slice(0,2).map((genre) =>genre.name).join(' | ')}{' '}•<TimeFormat movie ={movie}/>
         </p>
       <div className='flex items-center justify-between mt-auto pt-4'>
-         <button className=' flex text-[1rem] items-center justify-center w-30 px-2 py-2.5 gap-1 rounded-full cursor-pointer font-medium bg-primary hover:bg-primary-dull transition'>
+         <button
+           className='flex text-[1rem] items-center justify-center w-30 px-2 py-2.5 gap-1 rounded-full cursor-pointer font-medium transition ease-in-out duration-300 transform hover:scale-102 hover:brightness-110'
+           style={{ backgroundImage: 'linear-gradient(to right, var(--color-primary), var(--color-second))' }}
+         >
             Buy Ticket 
             {/* aa */}
             <ArrowRight className='w-4 h-auto font-bold'/> 

@@ -47,7 +47,7 @@ function MovieDetails() {
   }, [id])
 
   return show ? (
-    <div className='flex flex-col px-36 mt-30'>
+    <div className='flex flex-col px-36 mt-30 bg-bg-main min-h-screen'>
      <FrontDetail show={show.movie}/>
      <Cast show={show.movie}/>
      <DateSelect id={id} dateTime={show.dateTime}/>   

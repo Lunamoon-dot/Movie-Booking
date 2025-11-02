@@ -9,7 +9,7 @@ function Footer() {
                  <Link to="/" className='max-md:flex-1 flex items-end gap-2'>
                     <img src='/image.png' alt=""  className='w-10 h-auto'/>
                     <div className='flex flex-col items-end justify-end h-full'>
-                        <p className='text-2xl font-medium'> <span className='text-primary-dull text-3xl font-bold'>Owl</span>Cinema</p>
+                        <p className='text-2xl font-medium'> <span className='text-3xl font-bold' style={{ backgroundImage: 'linear-gradient(to right, var(--color-primary), var(--color-second))', WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent', display: 'inline-block' }}>Owl</span>Cinema</p>
                     </div>
                </Link>
                   <p className="mt-6 text-sm">

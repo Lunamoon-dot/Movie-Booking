@@ -30,12 +30,18 @@ function HeroSession() {
       <div className='max-w-180 mb-5'>
       While the Second World War rages, the teenage Mahito, haunted by his mother's tragic death, is relocated from Tokyo to the serene rural home of his new stepmother Natsuko, a woman who bears a striking resemblance to the boy's mother. As he tries to adjust, this strange new world grows even stranger following the appearance of a persistent gray heron, who perplexes and bedevils Mahito, dubbing him the "long-awaited one."
       </div>
-       {/* visit movies button */}
-        <button  className='text-center flex px-4 py-3 gap-1 hover:bg-primary-dull cursor-pointer transition ease-in-out duration-300 hover:text-gray-400  bg-primary rounded-3xl font-semibold'
-        onClick={()=> navigate('/movies')}
-        >
-          Explore Movies <ArrowRight strokeWidth={3} width={18}/>
-        </button>
+      {/* visit movies button */}
+      <button
+        type='button'
+        className='group text-center flex px-4 py-3 gap-1 transform hover:scale-102 brightness-110 hover:brightness-120 cursor-pointer transition ease-in-out duration-300 rounded-3xl font-semibold'
+        style={{ backgroundImage: 'linear-gradient(to right, var(--color-primary), var(--color-second))' }}
+        onClick={() => {
+          navigate('/movies');
+          window.scrollTo({ top: 0});
+        }}
+      >
+        Explore Movies <ArrowRight strokeWidth={3} width={18} className='group-hover:translate-x-1 transition duration-300 ease-in-out'/>
+      </button>
     </div>
   )
 }

@@ -113,7 +113,7 @@ function AddShows() {
       fetchData(); //đề phòng việc bị gọi api liên tục bởi attacker, thật ra user vẫn gửi đc nhưng sẽ bị chặn ở BE và có thể truy vết ai gửi
     }
     
-  },[])
+  },[user])
 
   return nowPlayingMovies.length > 0 ?(
     <div className='flex flex-col mt-10 mb-20 p-4 max-w-7xl mx-auto w-full'>

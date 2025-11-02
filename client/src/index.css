@@ -6,6 +6,15 @@
   --color-primary-dull: #9810fa;
   --color-second: #9810fa;
   --color-second-dull: #C47BFF;
+
+  /* Background palette */
+  --color-bg-main: #0d0517;
+  --color-bg-gradient-from: #07020f;
+  --color-bg-gradient-via: #341060;
+  --color-bg-gradient-to: #7a2bb3;
+  --color-bg-card: #2b0f58;
+  --color-bg-card-hover: #3a1a74;
+  --color-bg-section: #311567;
 }
 
 .scrollbar-hide::-webkit-scrollbar {
@@ -27,7 +36,7 @@
 
 body{
   color: white;
-  background-color: #09090B;
+  background-color: var(--color-bg-main);
 }
 
 input::-webkit-outer-spin-button,

@@ -10,7 +10,7 @@ function Movies() {
        console.log('Movies data:', movies);
      }, [movies]);
   return movies.length > 0 ? (
-    <div className='mt-30 h-auto flex flex-col items-center'>
+    <div className='mt-30 h-auto flex flex-col items-center bg-bg-main min-h-screen w-full'>
       <div className='w-280 flex justify-between'>
       <p className='font-medium text-3xl'>
         Avilable Movies
@@ -24,7 +24,7 @@ function Movies() {
     </div>
   ):
   (
-    <div>
+    <div className='bg-bg-main min-h-screen flex items-center justify-center text-gray-300'>
       Not Avilable
     </div>
   )

@@ -26,7 +26,7 @@ const {shows} = useAppContext();
         {shows.slice(0,4).map((movie, index) =><MovieCard key = {index} movie ={movie}/>)}
       </div>
 
-      <button className='w-40 px-4.5 py-2 rounded-md cursor-pointer font-medium bg-primary hover:bg-primary-dull transition mt-[4.5rem]' onClick={()=>{scrollTo(0,0);navigate('/movies')}}>Show more</button>
+      <button className='w-40 px-4.5 py-2 rounded-md cursor-pointer font-medium bg-primary hover:bg-primary/80 transition mt-[4.5rem]' onClick={()=>{scrollTo(0,0);navigate('/movies')}}>Show more</button>
     </div>
   )
 }

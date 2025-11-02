@@ -3,7 +3,7 @@ import { Calendar, Bell, Film, Sparkles } from 'lucide-react'
 
 function ComingSoon() {
   return (
-    <div className='min-h-screen bg-linear-to-br from-bg-gradient-from via-bg-gradient-via to-bg-gradient-to pt-30 pb-20 px-6 flex items-center justify-center'>
+    <div className='min-h-screen bg-bg-main bg-linear-to-br from-bg-gradient-from via-bg-gradient-via to-bg-gradient-to pt-30 pb-20 px-6 flex items-center justify-center'>
       <div className='max-w-4xl mx-auto text-center'>
         {/* Animated Icon */}
         <div className='relative mb-10'>

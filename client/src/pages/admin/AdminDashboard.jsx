@@ -31,7 +31,7 @@ function AdminDashboard() {
  useEffect(()=>{
   if(user){
   fetchData()
-  }}, [])
+  }}, [user])
 
   return loading? (
     <div className='flex flex-col mt-10 pl-5 max-w-205'>
