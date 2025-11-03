@@ -17,6 +17,7 @@ import AddShows from './pages/admin/AddShows'
 import { SignIn } from '@clerk/clerk-react'
 import { useAppContext } from '../context/appContext'
 import Loading from './components/Loading'
+import ComingSoon from './pages/ComingSoon'
 
 
 function App() {
@@ -31,7 +32,18 @@ function App() {
         <Route path='/'
          element={<Home/>}/>
 
-         <Route path='movies' element ={<Movies/>}/>
+         <Route path='movies'
+          element ={<Movies/>}/>
+
+          <Route path='theaters'
+           element={<ComingSoon/>}/>
+
+          <Route path='theaters'
+           element={<ComingSoon/>}/>
+
+          <Route path='releases'
+           element={<ComingSoon/>}/>
+
 
         <Route path='/favorite'
          element={<Favorite/>}/>

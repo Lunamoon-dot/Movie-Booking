@@ -26,8 +26,8 @@ function Navbar() {
           {/* ScrollTo */}
           <NavLink to='/' onClick={()=> { setMenu(false); window.scrollTo(0,0); }}> Home</NavLink>
           <NavLink to='/movies' onClick={()=> { setMenu(false); window.scrollTo(0,0); }}> Movies</NavLink>
-          <NavLink to='/' onClick={()=> { setMenu(false); window.scrollTo(0,0); }}> Theaters</NavLink>
-          <NavLink to='/' onClick={()=> { setMenu(false); window.scrollTo(0,0); }}> Releases</NavLink>
+          <NavLink to='/theaters' onClick={()=> { setMenu(false); window.scrollTo(0,0); }}> Theaters</NavLink>
+          <NavLink to='/releases' onClick={()=> { setMenu(false); window.scrollTo(0,0); }}> Releases</NavLink>
           <NavLink to='/favorite' onClick={()=> { setMenu(false); window.scrollTo(0,0); }}> Favorites</NavLink>
         </div>
 
