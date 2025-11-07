@@ -37,7 +37,7 @@ function MyBooking() {
   }, [user])
 
   return !loading ? (
-    <div className='w-full min-h-screen flex justify-center px-4 md:px-8 lg:px-12 bg-bg-main'>
+    <div className='w-full min-h-screen flex items-center justify-center px-4 md:px-8 lg:px-12 bg-bg-main'>
       <div className='w-full max-w-4xl flex flex-col gap-8 items-center'>
         <p className='text-3xl font-semibold text-center mt-30'>My Booking</p>
         {bookings.length === 0 ? (

@@ -1,24 +1,24 @@
-import nodemailer from 'nodemailer'
+// import nodemailer from 'nodemailer'
 
-const transporter = nodemailer.createTransport({
-  host: "sandbox.smtp.mailtrap.io",
-  port: 587,
-  secure: false, // upgrade later with STARTTLS
-  auth: {
-    user: process.env.SMTP_USER,
-    pass: process.env.SMTP_PASS,
-  },
-});
+// const transporter = nodemailer.createTransport({
+//   host: "sandbox.smtp.mailtrap.io",
+//   port: 587,
+//   secure: false, // upgrade later with STARTTLS
+//   auth: {
+//     user: process.env.SMTP_USER,
+//     pass: process.env.SMTP_PASS,
+//   },
+// });
 
 
-const sendEmail = async ({to, subject, body})=>{
-  const response = await transporter.sendMail({
-    from:process.env.SENDER_EMAIL,
-    to,
-    subject,
-    html: body,
-  })
-  return response;
-}
-//dun nau
-export default sendEmail;
+// const sendEmail = async ({to, subject, body})=>{
+//   const response = await transporter.sendMail({
+//     from:process.env.SENDER_EMAIL,
+//     to,
+//     subject,
+//     html: body,
+//   })
+//   return response;
+// }
+// //dun nau
+// export default sendEmail;
