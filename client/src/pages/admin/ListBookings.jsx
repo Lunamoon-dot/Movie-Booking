@@ -57,7 +57,10 @@ function ListBookings() {
             <tbody>
               {bookings.map((booking, index)=>(
                 <tr key={index} className={`${index %2 === 0 ?'bg-primary/20':'bg-primary/15'}`}>
-                  <td className='p-2 min-w-45 pl-5'>{booking?.user?.name || 'N/A'}</td>
+                  <td className='p-2 min-w-45 pl-5'>
+                    {booking?.user?.name || 'Deleted User'}
+                    {booking?.user?.isDeleted && <span className='text-xs text-gray-500 ml-1'>(Deleted)</span>}
+                  </td>
                   <td className='p-2 max-w-[180px]'>
                     <div className='truncate'>{booking?.show?.movie?.title || 'N/A'}</div>
                   </td>

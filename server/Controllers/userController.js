@@ -26,7 +26,7 @@ export const addFavorite = async (req, res)=>{
   try {
     const {movieId} =req.body;
     const userId = req.auth().userId;
-
+    
     const user = await clerkClient.users.getUser(userId)
     if(!user.privateMetadata.favorites){ //nếu trong favorites chx tồn tại movie nào thì tạo 1 mảng
       user.privateMetadata.favorites = [];

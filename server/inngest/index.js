@@ -28,7 +28,9 @@ const syncUserDeletion = inngest.createFunction(
   {event: 'clerk/user.deleted'},
   async({event})=>{
    const {id} = event.data;
-   await User.findByIdAndDelete(id);
+   // Soft delete: đánh dấu user là đã xóa thay vì xóa hẳn
+   // Để giữ lại thông tin user trong các booking cũ
+   await User.findByIdAndUpdate(id, { isDeleted: true });
   }
 )
 //Deleting seat after a specific of time 

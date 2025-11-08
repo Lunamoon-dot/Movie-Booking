@@ -6,7 +6,7 @@ import Show from "../model/Show.js";
 export const getNowPlayingMovies = async (req, res) =>{
   try {
     const {data} = await axios.get('https://api.themoviedb.org/3/movie/now_playing', {
-      headers:{ //header co s nha, lam mat 15p fix
+      headers:{
         Authorization: `Bearer ${process.env.TMDB_API_KEY}`
       }
     }) // lấy dữ liệu từ endpoit cx như cấp quyền đc đọc 
